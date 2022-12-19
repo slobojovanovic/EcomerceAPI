@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <!--PatternLayout pattern="%level %m" /-->
+            <PatternLayout pattern=" %m" />
+        </Console>
+        <JDBC name="dbLogsStore" tableName="log_db.log" >
+        	 <!--DriverManager url="jdbc:mysql://localhost:3306/springboot_db" 
+        	 driverClassName="com.mysql.cj.jdbc.Drive"
+        	 username="root" /-->
+            <ConnectionFactory class="com.ecommerce.demo.config.ConnectionFactory" method="getDatabaseConnection"/>
+   			<!--Column name="LEVEL" pattern="%level" /-->
+            <Column name="MESSAGE" pattern="%message" isClob="true"/>
+            
+        </JDBC>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.ecommerce.demo.controllers" level="INFO">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Root level="fatal">
+            <AppenderRef ref="dbLogsStore" />
+        </Root>
+    </Loggers>
+</Configuration>
